@@ -2,3 +2,5 @@
 images
 manual1
 mask
+__pycache__
+*.h5
