@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+from sklearn.metrics import accuracy_score, precision_score, recall_score, classification_report
 
 # CLAHE - Contrast Limited Adaptive Histogram Equalization
 def CLAHE(img):
@@ -40,9 +41,19 @@ def postprocess(segmented, mask):
 
 
 def score(segmented, target):
+    segmented = np.array(segmented).flatten()
+    target = np.array(target).flatten()
+    
+    segmented = segmented.astype('uint8')
+    target = target.astype('uint8')
+
     segmented[segmented > 0] = 1
     target[target > 0] = 1
-    segmented = segmented.astype('uint8')
-    predicted = 1 - cv2.bitwise_xor(segmented, target) # XNOR 0,0 -> 1; 1,1 -> 1
-    accuracy = np.sum(predicted) / (predicted.shape[0] * predicted.shape[1])
-    return accuracy
+    
+    accuracy = accuracy_score(target, segmented)
+    precision = precision_score(target, segmented)
+    recall = recall_score(target, segmented)
+    f1_score = 2 * precision * recall / (precision + recall)
+    clf_report = classification_report(target, segmented)
+    
+    return accuracy, precision, recall, f1_score, clf_report
