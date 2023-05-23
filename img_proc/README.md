@@ -17,4 +17,15 @@ This solution is based on the following scientific paper:
 
 ### Results
 <img src="result.png"><br><br>
-Accuracy of provided sample result is approximetaly 95.6%.
+Classification report for 5 random images of resolution 512x512:
+
+|    Class    | Precision |  Recall  | F1-Score | Support |
+|:-----------:|:---------:|:--------:|:--------:|:-------:|
+|      0      |    0.97   |   0.98   |   0.97   |  121140 |
+|      1      |    0.71   |   0.63   |   0.67   |  99320  |
+|             |           |          |          |         |
+|  Accuracy   |           |          |   0.95   | 1310720 |
+|  Macro Avg  |    0.84   |   0.80   |   0.82   | 1310720 |
+|Weighted Avg |    0.95   |   0.95   |   0.95   | 1310720 |
+
+Where blood vessel occurrence is denoted as a positive label.
