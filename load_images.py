@@ -5,6 +5,8 @@ MAX_HEIGHT, MAX_WIDTH = 3504, 2336
 MIN_HEIGHT, MIN_WIDTH = 10, 10
 
 def load(img_size):
+    
+    img_size = (img_size[1], img_size[0])
 
     if (img_size[0] > MAX_HEIGHT or img_size[0] < MIN_HEIGHT) or (img_size[1] > MAX_WIDTH or img_size[1] < MIN_WIDTH):
         print('Incorrect image resolution')
