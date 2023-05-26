@@ -86,7 +86,7 @@ def display_sections(img_sections, img_size, n): # test for low resolutions or/a
     rows = int(rows / n)
     cols = int(cols / n)
     
-    fig, ax = plt.subplots(rows, cols, figsize=(7,7))
+    fig, ax = plt.subplots(rows, cols, figsize=(4,4))
     for i in range(rows):
         for j in range(cols):
             ax[i, j].axis('off')
