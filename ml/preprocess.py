@@ -19,57 +19,6 @@ def hist_equalization(img):
     ycrcb_img[:, :, 0] = cv2.equalizeHist(ycrcb_img[:, :, 0])
     equalized_img = cv2.cvtColor(ycrcb_img, cv2.COLOR_YCrCb2BGR)
     return equalized_img
-
-
-# cool but not used in proper solution
-def sectioning(img, target, n, debug=False):
-    # n x n sections TODO
-    if img.shape[0] % n != 0 or img.shape[1] % n != 0:
-        img = padding(img, n)
-        
-    if target.shape[0] % n != 0 or target.shape[1] % n != 0:
-        target = padding(target, n, rgb=False)
-    
-    if debug:
-        print('Img padded shape: ', img.shape)
-        print('Target padded shape: ', target.shape)
-    
-    rows, cols = int(img.shape[0] / n) , int(img.shape[1] / n)
-    num_sections = rows * cols
-    img_sections = np.zeros((num_sections, n, n, 3))
-    target_sections = np.zeros((num_sections, n, n))
-
-    for i in range(rows):
-        for j in range(cols):
-            img_sections[i * cols + j] = img[i * n : (i+1) * n, j * n : (j+1) * n]
-            target_sections[i * cols + j] = target[i * n : (i+1) * n, j * n : (j+1) * n]
-            
-    return img_sections, target_sections, img.shape, target.shape
-    
-    
-# we move window by one pixel each time
-# if passed image is size MxM this function will return M*M sections of size N*N
-# each section correspond to one pixel in the input image
-def sectioning_valid(img, n):   
-    if n % 2 == 0:
-        print('N should be an odd number')
-        return
-    
-    # TODO perform padding similar like in 'sectioning' function    
-    rows, cols = img.shape[0], img.shape[1]
-    print(rows, cols)
-    num_sections = rows * cols
-    img_sections = np.zeros((num_sections, n, n, 3))
-        
-    # border filled by 0s - of size (N-1)
-    half_n = (n-1) // 2
-    pad_size = ((half_n, half_n), (half_n, half_n), (0, 0))
-    img = np.pad(img, pad_size, mode='constant', constant_values=0)
-
-    for i in range(half_n, rows-half_n):
-        for j in range(half_n, cols-half_n):
-            img_sections[(i - half_n) * cols + j - half_n] = img[i - half_n: i + half_n + 1, j - half_n: j + half_n + 1]
-    return img_sections
     
     
 def padding(img, n, rgb=True):
@@ -98,6 +47,31 @@ def padding(img, n, rgb=True):
     return img / 255.0
 
 
+# we move window by one pixel each time
+# if passed image is size MxM this function will return M*M sections of size N*N
+# each section correspond to one pixel in the input image
+def sectioning_valid(img, n):   
+    if n % 2 == 0:
+        print('N should be an odd number')
+        return
+    
+    # TODO perform padding similar like in 'sectioning' function    
+    rows, cols = img.shape[0], img.shape[1]
+    print(rows, cols)
+    num_sections = rows * cols
+    img_sections = np.zeros((num_sections, n, n, 3))
+        
+    # border filled by 0s - of size (N-1)
+    half_n = (n-1) // 2
+    pad_size = ((half_n, half_n), (half_n, half_n), (0, 0))
+    img = np.pad(img, pad_size, mode='constant', constant_values=0)
+
+    for i in range(half_n, rows-half_n):
+        for j in range(half_n, cols-half_n):
+            img_sections[(i - half_n) * cols + j - half_n] = img[i - half_n: i + half_n + 1, j - half_n: j + half_n + 1]
+    return img_sections
+    
+    
 # cool but not used in proper solution
 def display_sections(img_sections, img_size, n): # test for low resolutions or/and big windows: e.g 100x100, 10x10
     if img_sections.ndim != 3 and img_sections.ndim != 4:
@@ -120,5 +94,30 @@ def display_sections(img_sections, img_size, n): # test for low resolutions or/a
     plt.subplots_adjust(wspace=0.05, hspace=0.05)
     plt.show()
     
+    
+# cool but not used in proper solution
+def sectioning(img, target, n, debug=False):
+    # n x n sections TODO
+    if img.shape[0] % n != 0 or img.shape[1] % n != 0:
+        img = padding(img, n)
+        
+    if target.shape[0] % n != 0 or target.shape[1] % n != 0:
+        target = padding(target, n, rgb=False)
+    
+    if debug:
+        print('Img padded shape: ', img.shape)
+        print('Target padded shape: ', target.shape)
+    
+    rows, cols = int(img.shape[0] / n) , int(img.shape[1] / n)
+    num_sections = rows * cols
+    img_sections = np.zeros((num_sections, n, n, 3))
+    target_sections = np.zeros((num_sections, n, n))
+
+    for i in range(rows):
+        for j in range(cols):
+            img_sections[i * cols + j] = img[i * n : (i+1) * n, j * n : (j+1) * n]
+            target_sections[i * cols + j] = target[i * n : (i+1) * n, j * n : (j+1) * n]
+            
+    return img_sections, target_sections, img.shape, target.shape
     
  
