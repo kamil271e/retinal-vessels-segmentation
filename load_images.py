@@ -37,3 +37,4 @@ def load(img_size):
         z.append(mask)
 
     return X, y, z
+
