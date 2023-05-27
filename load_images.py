@@ -6,10 +6,12 @@ MIN_HEIGHT, MIN_WIDTH = 10, 10
 
 def load(img_size):
     
+    img_size = (img_size[1], img_size[0])
+
     if (img_size[0] > MAX_HEIGHT or img_size[0] < MIN_HEIGHT) or (img_size[1] > MAX_WIDTH or img_size[1] < MIN_WIDTH):
         print('Incorrect image resolution')
         return None
-    
+
     X = []
     y = []
     z = []
@@ -33,5 +35,6 @@ def load(img_size):
         X.append(img)
         y.append(target)
         z.append(mask)
-        
+
     return X, y, z
+
