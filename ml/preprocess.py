@@ -29,6 +29,7 @@ def sectioning_img(img, n):
         return
     
     img = clahe(img)
+    img = hist_equalization(img)
     
     # TODO perform padding similar like in unused 'sectioning' function    
     rows, cols = img.shape[0], img.shape[1]
@@ -47,12 +48,19 @@ def sectioning_img(img, n):
     
     
 # sectioning num_img nuber of randomly sampled images  
-def sectioning(X, y, num_img, img_size, n):
+def sectioning(X, y, num_img, img_size, n, indices=[]):
     sections = np.zeros((num_img, img_size[0]*img_size[1], n, n, 3))
     targets = np.zeros((num_img, img_size[0]*img_size[1]))
-    random_imgs_indx = [np.random.randint(0, len(X)-1) for _ in range(num_img)]
+    
+    if indices:
+        imgs_indx = indices
+        if num_img != len(indices):
+            print('Number of indices are not equal number of images')
+            return        
+    else:
+        imgs_indx = [np.random.randint(0, len(X)-1) for _ in range(num_img)]
 
-    for i, indx in enumerate(random_imgs_indx):
+    for i, indx in enumerate(imgs_indx):
         sections[i] = sectioning_img(X[indx], n)
         _, target = cv2.threshold(y[indx], 128, 1, cv2.THRESH_BINARY)
         targets[i] = target.flatten()
