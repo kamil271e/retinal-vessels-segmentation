@@ -26,7 +26,7 @@ XGBoost is a highly regarded ensemble method that leverages gradient boosting al
 
 The classifier was trained on 15 images of resolution 512x512 and 5x5 sections.
 
-![result](https://github.com/kamil271e/retinal-vessels-segmentation/assets/82380348/63f14b07-bec5-411e-9138-5b40c1382218)
+![result_ml](https://github.com/kamil271e/retinal-vessels-segmentation/assets/82380348/c9020f3f-9ea9-44c5-9338-69e6e5aa8bec)
 
 
 The classification report below shows the results for 5 unseen images of resolution 512x512:
