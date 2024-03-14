@@ -1,0 +1,8 @@
+opencv-python
+numpy
+scikit-learn
+jupyterlab
+matplotlib
+xgboost
+keras
+segmentation_models
