@@ -6,21 +6,27 @@ import shutil
 
 MAX_HEIGHT, MAX_WIDTH = 3504, 2336
 MIN_HEIGHT, MIN_WIDTH = 10, 10
-URL="https://www5.cs.fau.de/fileadmin/research/datasets/fundus-images/all.zip"
+URL = "https://www5.cs.fau.de/fileadmin/research/datasets/fundus-images/all.zip"
+
 
 def load(img_size):
-    
     img_size = (img_size[1], img_size[0])
 
-    if (img_size[0] > MAX_HEIGHT or img_size[0] < MIN_HEIGHT) or (img_size[1] > MAX_WIDTH or img_size[1] < MIN_WIDTH):
-        print('Incorrect image resolution')
+    if (img_size[0] > MAX_HEIGHT or img_size[0] < MIN_HEIGHT) or (
+        img_size[1] > MAX_WIDTH or img_size[1] < MIN_WIDTH
+    ):
+        print("Incorrect image resolution")
         return None
 
-    images_dir = '../images'
-    targets_dir = '../manual1'
-    masks_dir = '../mask'
+    images_dir = "../images"
+    targets_dir = "../manual1"
+    masks_dir = "../mask"
 
-    if not os.path.exists(images_dir) or not os.path.exists(targets_dir) or not os.path.exists(masks_dir):
+    if (
+        not os.path.exists(images_dir)
+        or not os.path.exists(targets_dir)
+        or not os.path.exists(masks_dir)
+    ):
         download_data()
 
     X, y, z = [], [], []
@@ -42,17 +48,17 @@ def load(img_size):
         z.append(mask)
 
     return X, y, z
-  
+
 
 def download_data():
     print("Downloading and extracting data...")
     download_path = "./data.zip"
 
     response = requests.get(URL)
-    with open(download_path, 'wb') as f:
+    with open(download_path, "wb") as f:
         f.write(response.content)
 
-    with zipfile.ZipFile(download_path, 'r') as zip_ref:
+    with zipfile.ZipFile(download_path, "r") as zip_ref:
         zip_ref.extractall("../")
 
     os.remove(download_path)
