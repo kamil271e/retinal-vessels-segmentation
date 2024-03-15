@@ -1,18 +1,15 @@
-
-# 
-# 
+#
+#
 #  Set of functions that are no longer in use
-# 
-# 
+#
+#
 
 import numpy as np
 import cv2
 
 
 def sharpening(img):
-    kernel = np.array([[0, -1, 0],
-                      [-1, 5, -1],
-                      [0, -1, 0]])
+    kernel = np.array([[0, -1, 0], [-1, 5, -1], [0, -1, 0]])
     img_sharp = cv2.filter2D(src=img, ddepth=-1, kernel=kernel)
     return img_sharp
 
@@ -32,7 +29,5 @@ def edge_detection(img, lvl=25):
 def denoising(img, convert=False):
     if convert:
         img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
-    denoised = cv2.fastNlMeansDenoisingColored(img,None,10,10,7,21)
+    denoised = cv2.fastNlMeansDenoisingColored(img, None, 10, 10, 7, 21)
     return denoised
-
-

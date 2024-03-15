@@ -5,4 +5,7 @@ mask
 __pycache__
 *.h5
 trash
-*.txt
+vessel
+*.keras
+yaml.txt
+.idea
